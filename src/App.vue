@@ -1,17 +1,21 @@
 <template>
   <div id="app">
+    <router-link to="/">Home</router-link>
+    <router-link to="/about">About</router-link>
     <img src="./assets/logo.png">
-    <HelloWorld/>
+    <router-view/>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  created(){
+    this.$http.get('/ping').then((response) => {
+      console.log(response)
+    })
   }
 }
 </script>

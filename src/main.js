@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import router from './router'
 import './plugins/axios'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -17,6 +18,7 @@ Vue.config.productionTip = false
 // /* eslint-disable no-new */
 new Vue({
    el: '#app',
+   router: router,
    render: h => h(App)
 
    })
