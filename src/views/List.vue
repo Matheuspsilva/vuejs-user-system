@@ -5,10 +5,10 @@
     <div>
       <b-button v-b-modal.modal-1>Adicionar Usuários</b-button>
 
-      <b-modal id="modal-1" title="BootstrapVue">
+      <b-modal id="modal-1" title="Cadastro de usuário" hide-footer>
         <div class="row">
           <div class="col-6">
-            <b-form-input v-model="name" placeholder="nome"></b-form-input>
+            <b-form-input v-model="nome" placeholder="nome"></b-form-input>
           </div>
 
           <div class="col-6">
@@ -18,7 +18,7 @@
 
         <div class="row mt-4">
           <div class="col-12">
-            <button @click="addUsuario" class="btn btn-success">Salvar</button>
+            <button @click="addUsuario" class="btn btn-primary">Salvar</button>
           </div>
         </div>
 
@@ -37,10 +37,12 @@
       <tbody>
         <tr v-for="user in listagem" :key="user.id">
           <th scope="row">{{ user.id }}</th>
-          <td>{{ user.name }}</td>
+          <td>{{ user.nome }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <b-button variant="info">Editar</b-button>
+            <router-link :to="{ name: 'editar', params: { usuario: user.id }}">
+              <b-button variant="primary">Editar</b-button>
+            </router-link>
           </td>
         </tr>
       </tbody>
@@ -53,37 +55,38 @@ export default {
   data(){
     return {
       listagem: [],
-      name: '',
+      nome: '',
       email:''
 
     }
   },
   methods:{
-    adicionarListagem(){
-
+    getUsuarios(){
+      this.$http.get('/user').then((response) => {
+        this.listagem = response.data;
+      })
     },
     addUsuario(){
 
-    this.listagem.push({
-      name: this.name,
+    var data = {
+      nome: this.nome,
       email: this.email
-    });
+    }
 
-    this.name = ''
+    this.$http.post('/user', data).then((response)=>{
+      console.log(response)
+    })
+
+    this.listagem.push(data);
+
+    this.nome = ''
     this.email = ''
 
     }
   },
   created(){
-    var list = [
-      {
-        name: 'matheus',
-        email: 'matheus@email.com',
-        id: 1
-      }
-    ]
 
-    this.listagem = list;
+    this.getUsuarios();
 
   }
 };
