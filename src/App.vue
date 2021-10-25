@@ -2,8 +2,13 @@
   <div id="app">
     <router-link to="/">Home</router-link>
     <router-link to="/about">About</router-link>
-    <img src="./assets/logo.png">
+    <router-link to="/lista">Listagem</router-link>
+
+    <div class="container">
     <router-view/>
+
+    </div>
+
 
   </div>
 </template>
